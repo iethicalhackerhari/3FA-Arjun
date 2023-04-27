@@ -1,8 +1,9 @@
 import face_recognition_code
 import otp
 import pandas as pd
-
-def createDatabase(names = ['SARVESH', 'KESHAV'], usernames = ['lazy','music_man'], passwords = ['demo123', 'ilovenone']):
+import os 
+from cipher import encryption, decryption
+def createDatabase(names = ['SREEHARI'], usernames = ['sree'], passwords = ['sree']):
     new_db = pd.DataFrame()
     new_db['name'] = names
     new_db['username'] = usernames
@@ -63,6 +64,13 @@ def secondFactor(receiverMail):
     otp_object = otp.OTP(receiver_mail = receiverMail)
     otp_object.sendOTP()
     otp_object.verifyOTP()
+    
+def showPasswords(name):
+    decryption('arjun',f'D:/python/arjun/3FA/secretVault/{name}.txt')
+    osCommandString = f"notepad.exe D:/python/arjun/3FA/secretVault/{name}.txt"
+    os.system(osCommandString)
+    encryption('arjun',f'D:/python/arjun/3FA/secretVault/{name}.txt')
+    
 
 def main():
     createDatabase()
@@ -89,6 +97,7 @@ def main():
         print("Face recognized...")
         print("Verified...")
         print("Welcome ",name, " !!!")
+        showPasswords(name.lower())
 
 
 if __name__ == '__main__':
